@@ -42,12 +42,14 @@ public class ModelManySheetParserListener<T> implements ReadListener<Map<Integer
     @Override
     public void invoke(Map<Integer, CellData> cellDataMap, AnalysisContext analysisContext) {
         Integer sheetNo = analysisContext.readSheetHolder().getSheetNo();
+        int rowIndex = analysisContext.readRowHolder().getRowIndex();
         // 如果需要解析 此页数据
         ParseParam parseParam = parseParamMap.get(sheetNo);
         if (parseParam != null) {
             List<T> resultList = resultMap.get(sheetNo);
-            if (resultList == null) {
+            if (resultList == null && rowIndex >= parseParam.getStartLine()) {
                 resultList = new ArrayList<>();
+                resultMap.put(sheetNo, resultList);
                 parseModelToResultList(cellDataMap, analysisContext, parseParam, resultList);
             }
         }

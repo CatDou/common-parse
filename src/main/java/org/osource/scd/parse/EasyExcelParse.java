@@ -2,10 +2,12 @@ package org.osource.scd.parse;
 
 import com.alibaba.excel.EasyExcel;
 import org.osource.scd.param.ParseParam;
+import org.osource.scd.parse.event.ModelManySheetParserListener;
 import org.osource.scd.parse.event.ModelParserListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +30,11 @@ public class EasyExcelParse implements FileParse {
 
     @Override
     public <T> Map<Integer, List<T>> parseFileSheets(String filePath, Class<T> clazz, Map<Integer, ParseParam> parseParamMap) {
-        return null;
+        Map<Integer, List<T>> resultMap = new HashMap<>();
+        ModelManySheetParserListener modelParserListener = new ModelManySheetParserListener(parseParamMap, resultMap, clazz);
+        EasyExcel.read(filePath, modelParserListener).useDefaultListener(false)
+                .sheet().doRead();
+        return resultMap;
     }
 
 }
