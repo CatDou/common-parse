@@ -47,9 +47,11 @@ public class ModelManySheetParserListener<T> implements ReadListener<Map<Integer
         ParseParam parseParam = parseParamMap.get(sheetNo);
         if (parseParam != null) {
             List<T> resultList = resultMap.get(sheetNo);
-            if (resultList == null && rowIndex >= parseParam.getStartLine()) {
+            if (resultList == null) {
                 resultList = new ArrayList<>();
                 resultMap.put(sheetNo, resultList);
+            }
+            if (rowIndex >= parseParam.getStartLine()) {
                 parseModelToResultList(cellDataMap, analysisContext, parseParam, resultList);
             }
         }
