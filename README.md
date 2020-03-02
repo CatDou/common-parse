@@ -5,4 +5,4 @@ parse csv、excel files
 
 2. Support parsing CSV files
 
-3. Support large excel parse
+3. Support parsing large excel 
