@@ -5,7 +5,7 @@ import org.osource.scd.parse.format.CellFormat;
 
 /**
  * @author chengdu
- * @date 2020/1/17
+ *
  */
 public class InfoFormat implements CellFormat {
 

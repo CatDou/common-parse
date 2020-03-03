@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * @author chengdu
- * @date 2020/2/28
+ *
  */
 @Data
 public class UserInfo {

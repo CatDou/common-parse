@@ -15,7 +15,7 @@ import java.util.*;
 
 /**
  * @author chengdu
- * @date 2020/1/12
+ *
  */
 public class ExcelFileParse implements FileParse {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExcelFileParse.class);
@@ -70,7 +70,7 @@ public class ExcelFileParse implements FileParse {
                 Integer sheetNum = entry.getKey();
                 ParseParam parseParam = entry.getValue();
                 List<T> sheetResultList = new LinkedList<>();
-                Sheet sheet = workbook.getSheetAt(parseParam.getSheetNum());
+                Sheet sheet = workbook.getSheetAt(sheetNum);
                 addSheetResultList(sheet, clazz, parseParam, sheetResultList);
                 resultMap.put(sheetNum, sheetResultList);
             }

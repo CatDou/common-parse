@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * @author chengdu
- * @date 2020/3/2
+ *
  */
 public class ModelParserCommon {
     private static final Logger LOGGER = LoggerFactory.getLogger(ModelParserCommon.class);

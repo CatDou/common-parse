@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  * @author chengdu
- * @date 2020/1/12
+ *
  */
 public class FileParseCommonUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileParseCommonUtil.class);
@@ -99,7 +99,8 @@ public class FileParseCommonUtil {
 
     /**
      * 从 0 开始, AAA-702 不考虑
-     * @param num
+     * @param num the char num
+     * @return excel column str
      */
     public static String calExcelNumChar(int num) {
         if (num < 0 || num >= 702) {

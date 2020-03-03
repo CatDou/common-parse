@@ -4,7 +4,7 @@ import org.osource.scd.constant.ParseType;
 
 /**
  * @author chengdu
- * @date 2020/1/12
+ *
  */
 public class FileParseCreateor {
 

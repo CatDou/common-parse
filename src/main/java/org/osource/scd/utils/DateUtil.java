@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author chengdu
- * @date 2019/8/30.
+ *
  */
 public class DateUtil {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateUtil.class);

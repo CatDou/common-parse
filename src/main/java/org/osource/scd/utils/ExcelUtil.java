@@ -13,7 +13,7 @@ import java.io.InputStream;
 
 /**
  * @author chengdu
- * @date 2019/6/27.
+ *
  */
 public class ExcelUtil {
 
@@ -24,8 +24,8 @@ public class ExcelUtil {
 
     /**
      * 创建 workbook
-     * @param filePath
-     * @return
+     * @param filePath file path
+     * @return Workbook
      */
     public static Workbook createWorkBook(String filePath){
         if(filePath == null){
@@ -73,19 +73,5 @@ public class ExcelUtil {
         }
 
         return workbook;
-    }
-
-    public static void main(String[] args)  {
-//        String filePath = "C:\\Users\\chengdu\\Desktop\\12345中文.xlsx";
-//        Workbook workbook = getWorkBook(filePath);
-//        Sheet sheet = workbook.getSheetAt(0);
-//        int rows = sheet.getPhysicalNumberOfRows();
-//        for (int i = 0; i < rows; i++) {
-//            Row row = sheet.getRow(i);
-//            row.getPhysicalNumberOfCells();
-//            row.getCell(1).setCellType(CellType.STRING);
-//            String value = row.getCell(1).getStringCellValue();
-//            System.out.println(value);
-//        }
     }
 }

@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * @author chengdu
- * @date 2019/8/30.
+ *
  */
 public class DateTypeHandler implements BaseTypeHandler {
     @Override

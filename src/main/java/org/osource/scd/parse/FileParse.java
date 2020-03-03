@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * @author chengdu
- * @date 2020/1/12
+ *
  */
 public interface FileParse {
     <T> List<T> parseFile(String filePath, Class<T> clazz, ParseParam parseParam);
@@ -21,11 +21,11 @@ public interface FileParse {
 
     /**
      * parse many sheet
-     * @param filePath
-     * @param clazz
-     * @param parseParamMap
-     * @param <T>
-     * @return
+     * @param filePath file path
+     * @param clazz clazz
+     * @param parseParamMap parse param map
+     * @param <T> T
+     * @return many sheet result
      */
     <T> Map<Integer, List<T>> parseFileSheets(String filePath, Class<T> clazz,  Map<Integer, ParseParam> parseParamMap);
 }

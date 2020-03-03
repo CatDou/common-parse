@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  * @author chengdu
- * @date 2020/2/29
+ *
  */
 public class EasyExcelParse implements FileParse {
     private static final Logger LOGGER = LoggerFactory.getLogger(EasyExcelParse.class);
@@ -32,8 +32,7 @@ public class EasyExcelParse implements FileParse {
     public <T> Map<Integer, List<T>> parseFileSheets(String filePath, Class<T> clazz, Map<Integer, ParseParam> parseParamMap) {
         Map<Integer, List<T>> resultMap = new HashMap<>();
         ModelManySheetParserListener modelParserListener = new ModelManySheetParserListener(parseParamMap, resultMap, clazz);
-        EasyExcel.read(filePath, modelParserListener).useDefaultListener(false)
-                .sheet().doRead();
+        EasyExcel.read(filePath, modelParserListener).useDefaultListener(false).doReadAll();
         return resultMap;
     }
 

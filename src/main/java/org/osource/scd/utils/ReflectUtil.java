@@ -11,19 +11,19 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author chengdu
- * @date 2019/8/30.
+ *
  */
 public class ReflectUtil {
 
     private static final Field[] EMPTY_FIELD = {};
 
-    private static final  Map<Class<?>, Field[]> declaredFieldsCache = new ConcurrentHashMap<>(2^10);
+    private static final  Map<Class<?>, Field[]> declaredFieldsCache = new ConcurrentHashMap<>(1024);
 
-    private static final  Map<Class<?>, Method[]> declaredMethodsCache = new ConcurrentHashMap<>(2^10);
+    private static final  Map<Class<?>, Method[]> declaredMethodsCache = new ConcurrentHashMap<>(1024);
 
-    private static final  Map<Class<?>, List<Method>> beanMethodCache = new ConcurrentHashMap<>(2^5);
+    private static final  Map<Class<?>, List<Method>> beanMethodCache = new ConcurrentHashMap<>(1024);
 
-    private static final  Map<Class<?>, Map<String, Method>> beanFieldSetterCache = new ConcurrentHashMap<>(2^10);
+    private static final  Map<Class<?>, Map<String, Method>> beanFieldSetterCache = new ConcurrentHashMap<>(1024);
 
     private static final String SET_METHOD_PREFIX = "set";
 
@@ -41,8 +41,8 @@ public class ReflectUtil {
 
     /**
      * exclude Object class
-     * @param clazz
-     * @return
+     * @param clazz clazz
+     * @return this class field list
      */
     public static List<Field[]> getAllFields(Class<?> clazz) {
         if (clazz == null) {
@@ -99,8 +99,8 @@ public class ReflectUtil {
     /**
      * get all methods, but excluding
      * Object class
-     * @param clazz
-     * @return
+     * @param clazz clazz
+     * @return clazz method
      */
     public static List<Method[]> getAllMethods(Class<?> clazz) {
         if (clazz == null) {
@@ -152,8 +152,8 @@ public class ReflectUtil {
 
     /**
      * model method, setXX
-     * @param clazz
-     * @return
+     * @param clazz clazz
+     * @return method list
      */
     public static List<Method> getBeanMethods(Class<?> clazz) {
         if (clazz == null) {
@@ -178,8 +178,8 @@ public class ReflectUtil {
 
     /**
      * find setXX method
-     * @param methods
-     * @return
+     * @param methods methods
+     * @return method list
      */
     private static List<Method> findBeanMethod(Method[] methods) {
         List<Method> beanMethods = new ArrayList<>(methods.length);
@@ -194,9 +194,9 @@ public class ReflectUtil {
     }
 
     /**
-     * field name -> field setter
-     * @param clazz
-     * @return
+     * field name to field setter
+     * @param clazz clazz
+     * @return field name to filed setter method
      */
     public static Map<String, Method> getBeanSetterMap(Class<?> clazz) {
         if (clazz == null) {
