@@ -3,12 +3,14 @@ package org.osource.scd.utils;
 import org.osource.scd.constant.CommonConstant;
 import org.osource.scd.constant.ParseType;
 import org.osource.scd.exception.FileParseException;
+import org.osource.scd.param.FieldLocation;
 import org.osource.scd.param.ParseParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -124,5 +126,33 @@ public class FileParseCommonUtil {
             EXCEL_COLUMN.put(columnStr, i);
             COLUMN_NUM.put(i, columnStr);
         }
+    }
+
+    public static Map<Integer, Map<String, String>> convertFieldAnnoToMap(List<FieldLocation> fieldLocations) {
+        Map<Integer, Map<String, String>> sheetColumnMap = new HashMap<>(16);
+        for (FieldLocation fieldLocation : fieldLocations) {
+            int sheet = fieldLocation.getLocation().sheet();
+            Map<String, String> fieldColumnMap = sheetColumnMap.get(sheet);
+            if (fieldColumnMap == null) {
+                fieldColumnMap = new HashMap<>();
+            }
+            fieldColumnMap.put(fieldLocation.getLocation().column(), fieldLocation.getFieldName());
+            sheetColumnMap.put(sheet, fieldColumnMap);
+        }
+        return sheetColumnMap;
+    }
+
+    public static Map<Integer, Map<String, Method>> findSheetParam(Class<?> clazz) {
+        List<FieldLocation> fieldLocationList = AnnotationUtil.findFieldLocationAnno(clazz);
+        Map<Integer, Map<String, String>> sheetParam = convertFieldAnnoToMap(fieldLocationList);
+        Set<Map.Entry<Integer, Map<String, String>>> entrySet = sheetParam.entrySet();
+        Map<Integer, Map<String, Method>> sheetColumnMethod = new HashMap<>(16);
+        for (Map.Entry<Integer, Map<String, String>> entry : entrySet) {
+            int sheet = entry.getKey();
+            Map<String, String> fieldColumnMap = entry.getValue();
+            Map<String, Method> fieldColumnMethod = convertToColumnMethodMap(clazz, fieldColumnMap);
+            sheetColumnMethod.put(sheet, fieldColumnMethod);
+        }
+        return sheetColumnMethod;
     }
 }

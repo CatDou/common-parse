@@ -88,6 +88,11 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
+      <properties>
+        <gpg.homedir>C:/Users/chengdu/.gnupg</gpg.homedir>
+        <gpg.keyname>29ECC6A7</gpg.keyname>
+        <gpg.executable>D:/SoftWare/GnuPG/bin/gpg</gpg.executable>
+      </properties>
       <build>
         <plugins>
           <!-- 要生成Javadoc和Source jar文件，您必须配置javadoc和源Maven插件 -->
@@ -121,7 +126,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.5</version>
+            <version>1.6</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -131,6 +136,18 @@
                 </goals>
               </execution>
             </executions>
+          </plugin>
+          <!--Nexus Staging Maven插件是将组件部署到OSSRH并将其发布到Central Repository的推荐方法-->
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.7</version>
+            <extensions>true</extensions>
+            <configuration>
+              <serverId>oss</serverId>
+              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
           </plugin>
         </plugins>
       </build>

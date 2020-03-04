@@ -72,6 +72,7 @@ public class ModelManySheetParserListener<T> implements ReadListener<Map<Integer
             resultList.add(t);
         } else {
             int rowIndex = analysisContext.readRowHolder().getRowIndex();
+            LOGGER.error("convert row data to vo error {}", cellDataMap);
             parseParam.getErrorRecord()
                     .writeErrorMsg("line " + rowIndex + ":" + cellDataMap +
                             "covert to null");
