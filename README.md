@@ -62,12 +62,14 @@ If you need to parse multiple sheet pages
     private Date rdate;
 ```
 
-Three types of parsers are supported 
-  1.CsvFileParse
-  2.EasyExcelParse
-  3.ExcelFileParse
-
 #### Create parser
+
+Three types of parsers are supported 
+
+1. CsvFileParse
+2. EasyExcelParse
+3. ExcelFileParse
+
 Different parsers are selected according to the parameters of different file types. If you have a parser of the same file type, you can specify
 
 ```java

@@ -3,14 +3,12 @@ package org.osource.scd.utils;
 import org.osource.scd.constant.CommonConstant;
 import org.osource.scd.constant.ParseType;
 import org.osource.scd.exception.FileParseException;
-import org.osource.scd.param.FieldLocation;
 import org.osource.scd.param.ParseParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 

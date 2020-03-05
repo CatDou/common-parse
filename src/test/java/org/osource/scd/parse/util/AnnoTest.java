@@ -2,15 +2,11 @@ package org.osource.scd.parse.util;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.osource.scd.param.FieldLocation;
-import org.osource.scd.parse.model.ExcelTypeVo;
 import org.osource.scd.parse.model.MergeDataVo;
 import org.osource.scd.parse.model.UserInfo;
 import org.osource.scd.utils.AnnotationUtil;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
