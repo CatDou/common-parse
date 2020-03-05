@@ -87,7 +87,8 @@ public class FileParseCommonUtil {
     public static ParseType findParserType(String filePath, ParseParam parseParam) {
         ParseType parseTypeFind = findParserType(filePath);
         // 如果参数 说明要 EasyExcel 解析就使用 Easy Excel
-        if (ParseType.EXCEL.name().equals(parseTypeFind.name())) {
+        if (ParseType.EXCEL.name().equals(parseTypeFind.name())
+                && parseParam.getParseType() != null) {
             if (ParseType.EASYEXCEL.name().equals(parseParam.getParseType().name())) {
                 return ParseType.EASYEXCEL;
             }
@@ -126,33 +127,5 @@ public class FileParseCommonUtil {
             EXCEL_COLUMN.put(columnStr, i);
             COLUMN_NUM.put(i, columnStr);
         }
-    }
-
-    public static Map<Integer, Map<String, String>> convertFieldAnnoToMap(List<FieldLocation> fieldLocations) {
-        Map<Integer, Map<String, String>> sheetColumnMap = new HashMap<>(16);
-        for (FieldLocation fieldLocation : fieldLocations) {
-            int sheet = fieldLocation.getLocation().sheet();
-            Map<String, String> fieldColumnMap = sheetColumnMap.get(sheet);
-            if (fieldColumnMap == null) {
-                fieldColumnMap = new HashMap<>();
-            }
-            fieldColumnMap.put(fieldLocation.getLocation().column(), fieldLocation.getFieldName());
-            sheetColumnMap.put(sheet, fieldColumnMap);
-        }
-        return sheetColumnMap;
-    }
-
-    public static Map<Integer, Map<String, Method>> findSheetParam(Class<?> clazz) {
-        List<FieldLocation> fieldLocationList = AnnotationUtil.findFieldLocationAnno(clazz);
-        Map<Integer, Map<String, String>> sheetParam = convertFieldAnnoToMap(fieldLocationList);
-        Set<Map.Entry<Integer, Map<String, String>>> entrySet = sheetParam.entrySet();
-        Map<Integer, Map<String, Method>> sheetColumnMethod = new HashMap<>(16);
-        for (Map.Entry<Integer, Map<String, String>> entry : entrySet) {
-            int sheet = entry.getKey();
-            Map<String, String> fieldColumnMap = entry.getValue();
-            Map<String, Method> fieldColumnMethod = convertToColumnMethodMap(clazz, fieldColumnMap);
-            sheetColumnMethod.put(sheet, fieldColumnMethod);
-        }
-        return sheetColumnMethod;
     }
 }

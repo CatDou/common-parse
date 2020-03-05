@@ -1,13 +1,14 @@
 package org.osource.scd.parse.util;
 
+import org.junit.Assert;
 import org.junit.Test;
-import org.osource.scd.anno.Location;
 import org.osource.scd.param.FieldLocation;
 import org.osource.scd.parse.model.ExcelTypeVo;
 import org.osource.scd.parse.model.MergeDataVo;
-import org.osource.scd.parse.model.ReflectVo;
+import org.osource.scd.parse.model.UserInfo;
 import org.osource.scd.utils.AnnotationUtil;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,32 +20,13 @@ public class AnnoTest {
 
     @Test
     public void testAnno() {
-        List<FieldLocation> locationList = AnnotationUtil.findFieldLocationAnno(ExcelTypeVo.class);
-        for (FieldLocation location : locationList) {
-            System.out.println(location);
-        }
+        Map<String, Method> columnSetter = AnnotationUtil.findOneSheetSetter(UserInfo.class);
+        Assert.assertEquals(3, columnSetter.size());
     }
 
     @Test
-    public void testMergeDataVo() {
-        List<FieldLocation> locationList = AnnotationUtil.findFieldLocationAnno(MergeDataVo.class);
-        for (FieldLocation location : locationList) {
-            System.out.println(location);
-        }
-        testConvert(locationList);
-    }
-
-    public void testConvert(List<FieldLocation> fieldLocations) {
-        Map<Integer, Map<String, String>> sheetColumnMap = new HashMap<>();
-        for (FieldLocation fieldLocation : fieldLocations) {
-            int sheet = fieldLocation.getLocation().sheet();
-            Map<String, String> fieldColumnMap = sheetColumnMap.get(sheet);
-            if (fieldColumnMap == null) {
-                fieldColumnMap = new HashMap<>();
-            }
-            fieldColumnMap.put(fieldLocation.getLocation().column(), fieldLocation.getFieldName());
-            sheetColumnMap.put(sheet, fieldColumnMap);
-        }
-        System.out.println(sheetColumnMap);
+    public void testManySheet() {
+        Map<Integer, Map<String, Method>> sheetSetterMap = AnnotationUtil.findManySheetSetter(MergeDataVo.class);
+        Assert.assertEquals(2, sheetSetterMap.size());
     }
 }
