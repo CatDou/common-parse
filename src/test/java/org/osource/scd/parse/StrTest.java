@@ -18,7 +18,7 @@ public class StrTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private String split_regex = ",|\t";
+    private String split_regex = "[,\t]";
 
     private String[] splitCsvLine(String inputLine) {
         if (!inputLine.contains(",") && !inputLine.contains("\t")) {

@@ -5,5 +5,5 @@ package org.osource.scd.constant;
  *
  */
 public enum ParseType {
-    CSV,EXCEL,EASYEXCEL;
+    CSV,EXCEL,EASYEXCEL
 }

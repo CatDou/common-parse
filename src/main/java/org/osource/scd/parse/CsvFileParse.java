@@ -24,7 +24,7 @@ import java.util.Map;
 public class CsvFileParse implements FileParse {
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvFileParse.class);
 
-    private static final String split_regex = ",|\t";
+    private static final String split_regex = "[,\t]";
 
     @Override
     public <T> List<T> parseFile(String filePath, Class<T> clazz, ParseParam parseParam) {
@@ -50,8 +50,18 @@ public class CsvFileParse implements FileParse {
                         .writeErrorMsg("line " + readLine + ":" + lineStr +
                         "covert to null");
                     }
+                    if (parseParam.getConsumer() != null) {
+                        if (resultList.size() >= parseParam.getBatchNum()) {
+                            parseParam.getConsumer().accept(resultList);
+                        }
+                    }
                 }
                 readLine++;
+            }
+            if (parseParam.getConsumer() != null) {
+                if (resultList.size() > 0) {
+                    parseParam.getConsumer().accept(resultList);
+                }
             }
         } catch (Exception e) {
             LOGGER.error("parse csv file error {}", e.getMessage());

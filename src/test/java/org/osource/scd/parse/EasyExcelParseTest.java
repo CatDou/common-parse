@@ -2,9 +2,9 @@ package org.osource.scd.parse;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.osource.scd.constant.CommonConstant;
 import org.osource.scd.constant.ParseType;
 import org.osource.scd.param.ParseParam;
+import org.osource.scd.parse.consumer.SaveService;
 import org.osource.scd.parse.model.*;
 import org.osource.scd.utils.FileParseCommonUtil;
 
@@ -81,6 +81,21 @@ public class EasyExcelParseTest extends ParseCommonTest {
 
     @Test
     public void testLargeExcelTest() {
+        long startTime = System.currentTimeMillis();
+        String filePath = "file/large07.xlsx";
+        SaveService saveService = new SaveService();
+        ParseParam<LargeData> parseParam = new ParseParam<LargeData>().setStartLine(1)
+                .setFieldSetterMap(largeDataMethodMap)
+                .setParseType(ParseType.EASYEXCEL)
+                .setConsumer(saveService);
+        FileParse fileParse = FileParseCreateor.createFileParse(FileParseCommonUtil.findParserType(filePath, parseParam));
+        List<LargeData> largeDataList = fileParse.parseFile(filePath, LargeData.class, parseParam);
+        System.out.println("time " + (System.currentTimeMillis() - startTime) + "ms");
+        System.out.println(saveService.getSum());
+        Assert.assertEquals(0, largeDataList.size());
+    }
+
+    public void testLargeExcelWithConsumerTest() {
         long startTime = System.currentTimeMillis();
         String filePath = "file/large07.xlsx";
         ParseParam parseParam = new ParseParam().setStartLine(1)

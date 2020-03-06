@@ -7,7 +7,6 @@ import org.osource.scd.param.ParseParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +54,12 @@ public class ModelManySheetParserListener<T> implements ReadListener<Map<Integer
             if (rowIndex >= parseParam.getStartLine()) {
                 parseModelToResultList(cellDataMap, analysisContext, parseParam, resultList);
             }
+            if (parseParam.getConsumer() != null) {
+                if (resultList.size() >= parseParam.getBatchNum()) {
+                    parseParam.getConsumer().accept(resultList);
+                    resultList.clear();
+                }
+            }
         }
     }
 
@@ -81,11 +86,20 @@ public class ModelManySheetParserListener<T> implements ReadListener<Map<Integer
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-
+        parseParamMap.forEach(this::consumerLeftList);
     }
 
     @Override
     public boolean hasNext(AnalysisContext analysisContext) {
         return true;
+    }
+
+    public void consumerLeftList(Integer key, ParseParam parseParam) {
+        if (parseParam != null && parseParam.getConsumer() != null) {
+            List<T> sheetResult = resultMap.get(key);
+            if (sheetResult != null && sheetResult.size() > 0) {
+                parseParam.getConsumer().accept(sheetResult);
+            }
+        }
     }
 }

@@ -23,20 +23,28 @@ public class ModelParserCommon {
                                                Class<T> clazz, ParseParam parseParam) {
         T t = null;
         try {
-            t = (T) clazz.newInstance();
+            t = clazz.newInstance();
             ReadHolder currentReadHolder = analysisContext.currentReadHolder();
             Map<String, Method> fieldSetterMap = parseParam.getFieldSetterMap();
             for (Map.Entry<String, Method> entry : fieldSetterMap.entrySet()) {
                 String columnChar = entry.getKey();
                 Integer column = FileParseCommonUtil.EXCEL_COLUMN.get(columnChar);
-                CellData cellData = cellDataMap.get(column);
+                Object cellData = cellDataMap.get(column);
                 if (cellData == null) {
                     LOGGER.error("column char parse no data {}", columnChar);
                     continue;
                 }
-                String cellValue = (String) ConverterUtils.convertToJavaObject(cellData, null, null,
-                        currentReadHolder.converterMap(),
-                        currentReadHolder.globalConfiguration(), analysisContext.readRowHolder().getRowIndex(), column);
+                String cellValue;
+                if (cellData instanceof CellData) {
+                    cellValue = (String) ConverterUtils.convertToJavaObject((CellData) cellData, null, null,
+                            currentReadHolder.converterMap(),
+                            currentReadHolder.globalConfiguration(), analysisContext.readRowHolder().getRowIndex(), column);
+                } else if (cellData instanceof String) {
+                    cellValue = (String) cellData;
+                } else {
+                    LOGGER.error("unknown cell data type");
+                    return null;
+                }
                 if (parseParam.getCellFormat() != null) {
                     cellValue = parseParam.getCellFormat().format(columnChar, cellValue);
                 }

@@ -35,7 +35,7 @@ public class AnnotationUtil {
                         setterMethodMap = new HashMap<>(16);
                         manySheetMethodMap.put(sheet, setterMethodMap);
                     }
-                    // 如果同一个 sheet 页 已有有某一列对应的方法，
+                    // 如果同一个 sheet 页 已有某一列对应的方法，
                     // 取第一次遇到的
                     if (setterMethodMap.containsKey(column)) {
                         continue;
@@ -49,6 +49,7 @@ public class AnnotationUtil {
                 }
             }
         }
+        declaredClassSheetSetter.put(clazz, manySheetMethodMap);
         return manySheetMethodMap;
     }
 

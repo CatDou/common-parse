@@ -8,14 +8,16 @@ import org.osource.scd.parse.error.ErrorRecord;
 import org.osource.scd.parse.format.CellFormat;
 
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author chengdu
  *
  */
 @Data
-public class ParseParam {
+public class ParseParam<T> {
     private int startLine;
 
     private int sheetNum;
@@ -31,6 +33,10 @@ public class ParseParam {
     private CellFormat cellFormat;
 
     private ParseType parseType;
+
+    private Consumer<List<T>> consumer;
+
+    private int batchNum = 1000;
 
     public ParseParam() {
         errorRecord = new DefaultErrorRecord(new StringBuilder(""));
@@ -73,6 +79,16 @@ public class ParseParam {
 
     public ParseParam setParseType(ParseType parseType) {
         this.parseType = parseType;
+        return this;
+    }
+
+    public ParseParam setConsumer(Consumer<List<T>> consumer) {
+        this.consumer = consumer;
+        return this;
+    }
+
+    public ParseParam setBatchNum(int batchNum) {
+        this.batchNum = batchNum;
         return this;
     }
 }

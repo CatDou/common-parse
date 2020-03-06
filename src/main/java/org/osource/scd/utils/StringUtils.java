@@ -16,15 +16,6 @@
 
 package org.osource.scd.utils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Locale;
-import java.util.StringTokenizer;
-import java.util.TimeZone;
-
 /**
  * Miscellaneous {@link String} utility methods.
  *

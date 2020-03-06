@@ -21,15 +21,15 @@ public class DateUtil {
         Map<Pattern, String> map = new HashMap();
         map.put(Pattern.compile("\\d{4}/\\d{1,2}/\\d{1,2}"), "yyyy/MM/dd");
         map.put(Pattern.compile("\\d{4}-\\d{1,2}-\\d{1,2}"), "yyyy-MM-dd");
-        map.put(Pattern.compile("\\d{4}-\\d{1,2}-\\d{1,2}"), "yyyy-MM-dd");
         map.put(Pattern.compile("\\d{4}-\\d{1,2}-\\d{1,2}\\s{1,2}\\d{2}:\\d{2}:\\d{2}"), "yyyy-MM-dd HH:mm:ss");
+        map.put(Pattern.compile("\\d{4}-\\d{1,2}-\\d{1,2}\\s{1,2}\\d{2}:\\d{2}"), "yyyy-MM-dd HH:mm");
         map.put(Pattern.compile("\\d{4}\\.\\d{1,2}\\.\\d{1,2}"), "yyyy.MM.dd");
-        map.put(Pattern.compile("\\d{4}/\\d{1,2}/\\d{1,2}\\s{1}\\d{2}:\\d{2}:\\d{2}"), "yyyy/MM/dd HH:mm:ss");
+        map.put(Pattern.compile("\\d{4}/\\d{1,2}/\\d{1,2}\\s{1,2}\\d{2}:\\d{2}:\\d{2}"), "yyyy/MM/dd HH:mm:ss");
+        map.put(Pattern.compile("\\d{4}/\\d{1,2}/\\d{1,2}\\s{1,2}\\d{2}:\\d{2}"), "yyyy/MM/dd HH:mm");
         REGEX_MAP = Collections.unmodifiableMap(map);
     }
 
     public static Date parseStrToDate(String dateStr){
-        Date date = null;
         String pattern = null;
         Set<Map.Entry<Pattern,String>> entrySet = REGEX_MAP.entrySet();
         for (Map.Entry<Pattern, String> entry : entrySet){
@@ -42,18 +42,17 @@ public class DateUtil {
             LOGGER.error("pattern not config or input str error {}", dateStr);
             throw new DataParseException("pattern not config or input str error " + dateStr);
         }
+        return parseStrToDate(dateStr, pattern);
+    }
+
+    public static Date parseStrToDate(String dateStr, String pattern) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        Date date = null;
         try {
             date = simpleDateFormat.parse(dateStr);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return date;
-    }
-
-    public static void main(String[] args){
-        String input = "2019/8/30 11:20:23";
-        System.out.println(parseStrToDate(input));
-        System.out.println(parseStrToDate("2019/8/30"));
     }
 }

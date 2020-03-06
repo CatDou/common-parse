@@ -2,18 +2,13 @@ package org.osource.scd.parse.event;
 
 
 import com.alibaba.excel.context.AnalysisContext;
-import com.alibaba.excel.context.AnalysisContextImpl;
 import com.alibaba.excel.metadata.CellData;
 import com.alibaba.excel.read.listener.ModelBuildEventListener;
 import com.alibaba.excel.read.listener.ReadListener;
-import com.alibaba.excel.read.metadata.holder.ReadHolder;
-import com.alibaba.excel.util.ConverterUtils;
 import org.osource.scd.param.ParseParam;
-import org.osource.scd.utils.FileParseCommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
 
@@ -58,20 +53,27 @@ public class ModelParserListener<T> implements ReadListener<Map<Integer, CellDat
                         .writeErrorMsg("line " + rowIndex + ":" + cellDataMap +
                                 "covert to null");
         }
-
+        if (parseParam.getConsumer() != null) {
+            if (resultList.size() >= parseParam.getBatchNum()) {
+                parseParam.getConsumer().accept(resultList);
+                resultList.clear();
+            }
+        }
     }
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-
+        if (parseParam.getConsumer() != null) {
+            if (resultList.size() > 0) {
+                LOGGER.info("consumer left data size {}", resultList.size());
+                parseParam.getConsumer().accept(resultList);
+                resultList.clear();
+            }
+        }
     }
 
     @Override
     public boolean hasNext(AnalysisContext analysisContext) {
         return true;
-    }
-
-    public List<T> getResultList() {
-        return resultList;
     }
 }
