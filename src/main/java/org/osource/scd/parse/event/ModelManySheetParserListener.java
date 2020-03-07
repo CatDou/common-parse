@@ -54,9 +54,9 @@ public class ModelManySheetParserListener<T> implements ReadListener<Map<Integer
             if (rowIndex >= parseParam.getStartLine()) {
                 parseModelToResultList(cellDataMap, analysisContext, parseParam, resultList);
             }
-            if (parseParam.getConsumer() != null) {
+            if (parseParam.getDataConsumer() != null) {
                 if (resultList.size() >= parseParam.getBatchNum()) {
-                    parseParam.getConsumer().accept(resultList);
+                    parseParam.getDataConsumer().accept(resultList, sheetNo);
                     resultList.clear();
                 }
             }
@@ -95,10 +95,11 @@ public class ModelManySheetParserListener<T> implements ReadListener<Map<Integer
     }
 
     public void consumerLeftList(Integer key, ParseParam parseParam) {
-        if (parseParam != null && parseParam.getConsumer() != null) {
+        if (parseParam != null && parseParam.getDataConsumer() != null) {
             List<T> sheetResult = resultMap.get(key);
             if (sheetResult != null && sheetResult.size() > 0) {
-                parseParam.getConsumer().accept(sheetResult);
+                parseParam.getDataConsumer().accept(sheetResult, key);
+                sheetResult.clear();
             }
         }
     }

@@ -32,6 +32,9 @@ public class ModelParserCommon {
                 Object cellData = cellDataMap.get(column);
                 if (cellData == null) {
                     LOGGER.error("column char parse no data {}", columnChar);
+                    int rowIndex = analysisContext.readRowHolder().getRowIndex();
+                    parseParam.getErrorRecord().writeErrorMsg("line " + rowIndex + ":" +
+                            column + "column char parse no data");
                     continue;
                 }
                 String cellValue;

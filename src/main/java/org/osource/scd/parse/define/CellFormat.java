@@ -1,4 +1,4 @@
-package org.osource.scd.parse.format;
+package org.osource.scd.parse.define;
 
 /**
  * @author chengdu

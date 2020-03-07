@@ -83,27 +83,28 @@ public class EasyExcelParseTest extends ParseCommonTest {
     public void testLargeExcelTest() {
         long startTime = System.currentTimeMillis();
         String filePath = "file/large07.xlsx";
-        SaveService saveService = new SaveService();
-        ParseParam<LargeData> parseParam = new ParseParam<LargeData>().setStartLine(1)
-                .setFieldSetterMap(largeDataMethodMap)
-                .setParseType(ParseType.EASYEXCEL)
-                .setConsumer(saveService);
-        FileParse fileParse = FileParseCreateor.createFileParse(FileParseCommonUtil.findParserType(filePath, parseParam));
-        List<LargeData> largeDataList = fileParse.parseFile(filePath, LargeData.class, parseParam);
-        System.out.println("time " + (System.currentTimeMillis() - startTime) + "ms");
-        System.out.println(saveService.getSum());
-        Assert.assertEquals(0, largeDataList.size());
-    }
-
-    public void testLargeExcelWithConsumerTest() {
-        long startTime = System.currentTimeMillis();
-        String filePath = "file/large07.xlsx";
         ParseParam parseParam = new ParseParam().setStartLine(1)
                 .setFieldSetterMap(largeDataMethodMap).setParseType(ParseType.EASYEXCEL);
         FileParse fileParse = FileParseCreateor.createFileParse(FileParseCommonUtil.findParserType(filePath, parseParam));
         List<LargeData> largeDataList = fileParse.parseFile(filePath, LargeData.class, parseParam);
         System.out.println("time " + (System.currentTimeMillis() - startTime) + "ms");
         System.out.println(largeDataList.size());
+    }
+
+    @Test
+    public void testLargeExcelWithConsumerTest() {
+        long startTime = System.currentTimeMillis();
+        String filePath = "file/large07.xlsx";
+        SaveService saveService = new SaveService();
+        ParseParam parseParam = new ParseParam().setStartLine(1)
+                .setFieldSetterMap(largeDataMethodMap)
+                .setParseType(ParseType.EASYEXCEL)
+                .setDataConsumer(saveService);
+        FileParse fileParse = FileParseCreateor.createFileParse(FileParseCommonUtil.findParserType(filePath, parseParam));
+        List<LargeData> largeDataList = fileParse.parseFile(filePath, LargeData.class, parseParam);
+        System.out.println("time " + (System.currentTimeMillis() - startTime) + "ms");
+        System.out.println(saveService.getSum());
+        Assert.assertEquals(0, largeDataList.size());
     }
 
     @Test

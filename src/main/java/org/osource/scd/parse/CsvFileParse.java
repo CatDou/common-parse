@@ -50,17 +50,17 @@ public class CsvFileParse implements FileParse {
                         .writeErrorMsg("line " + readLine + ":" + lineStr +
                         "covert to null");
                     }
-                    if (parseParam.getConsumer() != null) {
+                    if (parseParam.getDataConsumer() != null) {
                         if (resultList.size() >= parseParam.getBatchNum()) {
-                            parseParam.getConsumer().accept(resultList);
+                            parseParam.getDataConsumer().accept(resultList, 0);
                         }
                     }
                 }
                 readLine++;
             }
-            if (parseParam.getConsumer() != null) {
+            if (parseParam.getDataConsumer() != null) {
                 if (resultList.size() > 0) {
-                    parseParam.getConsumer().accept(resultList);
+                    parseParam.getDataConsumer().accept(resultList,0);
                 }
             }
         } catch (Exception e) {

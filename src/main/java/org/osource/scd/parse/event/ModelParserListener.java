@@ -53,9 +53,10 @@ public class ModelParserListener<T> implements ReadListener<Map<Integer, CellDat
                         .writeErrorMsg("line " + rowIndex + ":" + cellDataMap +
                                 "covert to null");
         }
-        if (parseParam.getConsumer() != null) {
+        if (parseParam.getDataConsumer() != null) {
             if (resultList.size() >= parseParam.getBatchNum()) {
-                parseParam.getConsumer().accept(resultList);
+                Integer sheetNum = analysisContext.readSheetHolder().getSheetNo();
+                parseParam.getDataConsumer().accept(resultList, sheetNum);
                 resultList.clear();
             }
         }
@@ -63,10 +64,11 @@ public class ModelParserListener<T> implements ReadListener<Map<Integer, CellDat
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-        if (parseParam.getConsumer() != null) {
+        if (parseParam.getDataConsumer() != null) {
             if (resultList.size() > 0) {
                 LOGGER.info("consumer left data size {}", resultList.size());
-                parseParam.getConsumer().accept(resultList);
+                Integer sheetNum = analysisContext.readSheetHolder().getSheetNo();
+                parseParam.getDataConsumer().accept(resultList, sheetNum);
                 resultList.clear();
             }
         }

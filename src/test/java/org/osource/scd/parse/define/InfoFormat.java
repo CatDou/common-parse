@@ -1,8 +1,6 @@
 package org.osource.scd.parse.define;
 
 
-import org.osource.scd.parse.format.CellFormat;
-
 /**
  * @author chengdu
  *

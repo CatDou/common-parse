@@ -1,4 +1,4 @@
-package org.osource.scd.parse;
+package org.osource.scd.parse.define;
 
 
 import org.osource.scd.param.ParseParam;
@@ -7,6 +7,6 @@ import org.osource.scd.param.ParseParam;
  * @author chengdu
  *
  */
-public interface BusinessDefineParse {
+public interface RowDefineParse {
     <T> void defineParse(T t, Object rowData, ParseParam parseParam);
 }

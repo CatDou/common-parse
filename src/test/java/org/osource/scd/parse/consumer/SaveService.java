@@ -5,29 +5,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * @author James
  */
-public class SaveService implements Consumer<List<LargeData>> {
+public class SaveService implements DataConsumer {
     private static final Logger LOGGER = LoggerFactory.getLogger(SaveService.class);
 
     private int sum = 0;
 
-    @Override
-    public void accept(List<LargeData> largeDataList) {
-        sum = sum + largeDataList.size();
-        LOGGER.info("saved data size {}", largeDataList.size());
-        System.out.println(largeDataList);
-    }
-
-    @Override
-    public Consumer<List<LargeData>> andThen(Consumer<? super List<LargeData>> after) {
-        return null;
-    }
-
     public int getSum() {
         return sum;
+    }
+
+    @Override
+    public <T> void accept(List<T> resultList, Integer sheet) {
+        LOGGER.info("parse sheet {}", sheet);
+        sum = sum + resultList.size();
+        LOGGER.info("saved data size {}, sum {}", resultList.size(), sum);
     }
 }

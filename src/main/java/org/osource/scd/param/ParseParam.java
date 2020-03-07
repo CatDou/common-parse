@@ -2,29 +2,28 @@ package org.osource.scd.param;
 
 import lombok.Data;
 import org.osource.scd.constant.ParseType;
-import org.osource.scd.parse.BusinessDefineParse;
+import org.osource.scd.parse.define.RowDefineParse;
+import org.osource.scd.parse.consumer.DataConsumer;
 import org.osource.scd.parse.error.DefaultErrorRecord;
 import org.osource.scd.parse.error.ErrorRecord;
-import org.osource.scd.parse.format.CellFormat;
+import org.osource.scd.parse.define.CellFormat;
 
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 /**
  * @author chengdu
  *
  */
 @Data
-public class ParseParam<T> {
+public class ParseParam {
     private int startLine;
 
     private int sheetNum;
 
     private Map<String, Method> fieldSetterMap;
 
-    private BusinessDefineParse businessDefineParse;
+    private RowDefineParse businessDefineParse;
 
     private String encode;
 
@@ -34,7 +33,7 @@ public class ParseParam<T> {
 
     private ParseType parseType;
 
-    private Consumer<List<T>> consumer;
+    private DataConsumer dataConsumer;
 
     private int batchNum = 1000;
 
@@ -57,7 +56,7 @@ public class ParseParam<T> {
         return this;
     }
 
-    public ParseParam setBusinessDefineParse(BusinessDefineParse businessDefineParse) {
+    public ParseParam setBusinessDefineParse(RowDefineParse businessDefineParse) {
         this.businessDefineParse = businessDefineParse;
         return this;
     }
@@ -82,13 +81,13 @@ public class ParseParam<T> {
         return this;
     }
 
-    public ParseParam setConsumer(Consumer<List<T>> consumer) {
-        this.consumer = consumer;
+    public ParseParam setBatchNum(int batchNum) {
+        this.batchNum = batchNum;
         return this;
     }
 
-    public ParseParam setBatchNum(int batchNum) {
-        this.batchNum = batchNum;
+    public ParseParam setDataConsumer(DataConsumer dataConsumer) {
+        this.dataConsumer = dataConsumer;
         return this;
     }
 }

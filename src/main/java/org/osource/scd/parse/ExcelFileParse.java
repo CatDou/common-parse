@@ -96,7 +96,7 @@ public class ExcelFileParse implements FileParse {
             Map<String, Method> fieldSetterMap = parseParam.getFieldSetterMap();
             for (Map.Entry<String, Method> entry : fieldSetterMap.entrySet()) {
                 Integer column = FileParseCommonUtil.EXCEL_COLUMN.get(entry.getKey());
-                String cellValue = getCellValue(row, column);
+                String cellValue = ExcelUtil.getCellValue(row, column);
                 if (parseParam.getCellFormat() != null) {
                     cellValue = parseParam.getCellFormat().format(entry.getKey(), cellValue);
                 }
@@ -111,35 +111,5 @@ public class ExcelFileParse implements FileParse {
             e.printStackTrace();
         }
         return t;
-    }
-
-    private String getCellValue(Row row, Integer column) {
-        Cell cell = row.getCell(column);
-        String cellValue = "";
-        switch (cell.getCellType()) {
-            case STRING:
-                cellValue = cell.getStringCellValue();
-                break;
-            case NUMERIC:
-                if (HSSFDateUtil.isCellDateFormatted(cell)) {
-                    Date date = cell.getDateCellValue();
-                    // 转换为 long 时间
-                    cellValue = "L" + date.getTime();
-                } else {
-                    cellValue = String.valueOf(cell.getNumericCellValue());
-                }
-                break;
-            case BOOLEAN:
-                cellValue = String.valueOf(cell.getBooleanCellValue());
-                break;
-            case FORMULA:
-                cellValue = String.valueOf(cell.getCellFormula());
-                break;
-            case BLANK:
-                break;
-            default:
-                break;
-        }
-        return cellValue;
     }
 }

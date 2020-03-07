@@ -43,7 +43,7 @@ public class AnnotationUtil {
                     Method setterMethod = allBeanSetter.get(fieldName.toLowerCase());
                     if (setterMethod == null) {
                         throw new IllegalArgumentException("Bean " + clazz + " not contain field " + fieldName +
-                                " ,please check config column map");
+                                " set method ,please check config column map");
                     }
                     setterMethodMap.put(column, setterMethod);
                 }

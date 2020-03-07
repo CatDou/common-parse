@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.osource.scd.param.ParseParam;
-import org.osource.scd.parse.BusinessDefineParse;
 import org.osource.scd.parse.model.ReflectVo;
 
 
@@ -12,7 +11,7 @@ import org.osource.scd.parse.model.ReflectVo;
  * @author chengdu
  *
  */
-public class ReflectVoDefineParse implements BusinessDefineParse {
+public class ReflectVoDefineParse implements RowDefineParse {
 
     @Override
     public <T> void defineParse(T t, Object rowData, ParseParam parseParam) {
