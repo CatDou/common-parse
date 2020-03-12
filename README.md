@@ -12,7 +12,7 @@ parse csv、excel files
 <dependency>
    <groupId>com.github.shootercheng</groupId>
    <artifactId>common-parse</artifactId>
-   <version>1.1</version>
+   <version>1.2</version>
 </dependency>
 ```
 
