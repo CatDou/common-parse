@@ -54,6 +54,20 @@ public class AnnotationUtil {
     }
 
     public static Map<String, Method> findOneSheetSetter(Class<?> clazz) {
-        return findManySheetSetter(clazz).get(0);
+        Map<Integer, Map<String, Method>> sheetParamMap = findManySheetSetter(clazz);
+        if (sheetParamMap.size() != 1) {
+            throw new IllegalArgumentException("only support one sheet config");
+        }
+        Integer sheetNum = sheetParamMap.keySet().iterator().next();
+        return findManySheetSetter(clazz).get(sheetNum);
+    }
+
+    public static Map<String, Method> findOneSheetSetterBySheet(Class<?> clazz, int sheet) {
+        Map<Integer, Map<String, Method>> sheetParamMap = findManySheetSetter(clazz);
+        Map<String, Method> sheetSetter = sheetParamMap.get(sheet);
+        if (sheetSetter == null) {
+            throw new IllegalArgumentException("please check sheet num and annotation ");
+        }
+        return sheetSetter;
     }
 }

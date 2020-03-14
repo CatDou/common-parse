@@ -90,7 +90,7 @@ public class ExcelParseAnno {
     public void testExcel2007EasyExcel() {
         String filePath = "file/test2007.xlsx";
         ParseParam parseParam = new ParseParam()
-                .setFieldSetterMap(AnnotationUtil.findOneSheetSetter(ReflectVo.class))
+                .setFieldSetterMap(AnnotationUtil.findOneSheetSetterBySheet(ReflectVo.class, 0))
                 .setStartLine(1).setParseType(ParseType.EASYEXCEL);
         FileParse fileParse = FileParseCreateor.createFileParse(FileParseCommonUtil.findParserType(filePath, parseParam));
         List<ReflectVo> reflectVoList = fileParse.parseFile(filePath, ReflectVo.class, parseParam);

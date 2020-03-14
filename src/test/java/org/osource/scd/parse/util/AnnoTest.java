@@ -21,6 +21,12 @@ public class AnnoTest {
     }
 
     @Test
+    public void testAnnoWithSheet() {
+        Map<String, Method> columnSetter = AnnotationUtil.findOneSheetSetterBySheet(UserInfo.class, 0);
+        Assert.assertEquals(3, columnSetter.size());
+    }
+
+    @Test
     public void testManySheet() {
         Map<Integer, Map<String, Method>> sheetSetterMap = AnnotationUtil.findManySheetSetter(MergeDataVo.class);
         Assert.assertEquals(2, sheetSetterMap.size());
