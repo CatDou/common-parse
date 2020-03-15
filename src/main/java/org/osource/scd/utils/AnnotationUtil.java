@@ -1,6 +1,7 @@
 package org.osource.scd.utils;
 
 import org.osource.scd.anno.Location;
+import org.osource.scd.exception.ParamBuildException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -42,7 +43,7 @@ public class AnnotationUtil {
                     }
                     Method setterMethod = allBeanSetter.get(fieldName.toLowerCase());
                     if (setterMethod == null) {
-                        throw new IllegalArgumentException("Bean " + clazz + " not contain field " + fieldName +
+                        throw new ParamBuildException("Bean " + clazz + " not contain field " + fieldName +
                                 " set method ,please check config column map");
                     }
                     setterMethodMap.put(column, setterMethod);
@@ -55,8 +56,8 @@ public class AnnotationUtil {
 
     public static Map<String, Method> findOneSheetSetter(Class<?> clazz) {
         Map<Integer, Map<String, Method>> sheetParamMap = findManySheetSetter(clazz);
-        if (sheetParamMap.size() != 1) {
-            throw new IllegalArgumentException("only support one sheet config");
+        if (sheetParamMap == null || sheetParamMap.size() != 1) {
+            throw new ParamBuildException("only support one sheet config");
         }
         Integer sheetNum = sheetParamMap.keySet().iterator().next();
         return findManySheetSetter(clazz).get(sheetNum);
@@ -66,7 +67,7 @@ public class AnnotationUtil {
         Map<Integer, Map<String, Method>> sheetParamMap = findManySheetSetter(clazz);
         Map<String, Method> sheetSetter = sheetParamMap.get(sheet);
         if (sheetSetter == null) {
-            throw new IllegalArgumentException("please check sheet num and annotation ");
+            throw new ParamBuildException("please check sheet num and annotation ");
         }
         return sheetSetter;
     }
