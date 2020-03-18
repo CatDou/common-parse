@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * @author James
  */
-public class SaveService implements DataConsumer {
+public class SaveService implements DataConsumer<LargeData> {
     private static final Logger LOGGER = LoggerFactory.getLogger(SaveService.class);
 
     private int sum = 0;
@@ -19,7 +19,7 @@ public class SaveService implements DataConsumer {
     }
 
     @Override
-    public <T> void accept(List<T> resultList, Integer sheet) {
+    public void accept(List<LargeData> resultList, Integer sheet) {
         LOGGER.info("parse sheet {}", sheet);
         sum = sum + resultList.size();
         LOGGER.info("saved data size {}, sum {}", resultList.size(), sum);

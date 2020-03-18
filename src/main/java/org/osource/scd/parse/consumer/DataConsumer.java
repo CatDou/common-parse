@@ -5,12 +5,11 @@ import java.util.List;
 /**
  * @author James
  */
-public interface DataConsumer {
+public interface DataConsumer<T> {
     /**
      * 消费数据
-     * @param resultList
-     * @param sheet
-     * @param <T>
+     * @param resultList result list
+     * @param sheet sheet
      */
-    <T> void accept(List<T> resultList, Integer sheet);
+    void accept(List<T> resultList, Integer sheet);
 }

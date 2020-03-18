@@ -6,7 +6,7 @@
 
   <groupId>com.github.shootercheng</groupId>
   <artifactId>common-parse</artifactId>
-  <version>1.2</version>
+  <version>1.3</version>
 
   <name>common-parse</name>
   <description>common parse csv、excel</description>
@@ -156,17 +156,17 @@
             </executions>
           </plugin>
           <!--Nexus Staging Maven插件是将组件部署到OSSRH并将其发布到Central Repository的推荐方法-->
-          <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.7</version>
-            <extensions>true</extensions>
-            <configuration>
-              <serverId>oss</serverId>
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
-            </configuration>
-          </plugin>
+<!--          <plugin>-->
+<!--            <groupId>org.sonatype.plugins</groupId>-->
+<!--            <artifactId>nexus-staging-maven-plugin</artifactId>-->
+<!--            <version>1.6.7</version>-->
+<!--            <extensions>true</extensions>-->
+<!--            <configuration>-->
+<!--              <serverId>oss</serverId>-->
+<!--              <nexusUrl>https://oss.sonatype.org/</nexusUrl>-->
+<!--              <autoReleaseAfterClose>true</autoReleaseAfterClose>-->
+<!--            </configuration>-->
+<!--          </plugin>-->
         </plugins>
       </build>
       <distributionManagement>

@@ -5,35 +5,31 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.osource.scd.param.ParseParam;
 import org.osource.scd.parse.model.ReflectVo;
+import org.osource.scd.utils.ExcelUtil;
 
 
 /**
  * @author chengdu
  *
  */
-public class ReflectVoDefineParse implements RowDefineParse {
+public class ReflectVoDefineParse implements RowDefineParse<ReflectVo> {
 
     @Override
-    public <T> void defineParse(T t, Object rowData, ParseParam parseParam) {
-        if (t instanceof ReflectVo) {
-            ReflectVo reflectVo = (ReflectVo) t;
-            String address = "";
-            String email = "";
-            if (rowData instanceof String[]) {
-                String[] rowArr = (String[]) rowData;
-                address = rowArr[4];
-                email = rowArr[5];
-            } else if (rowData instanceof Row) {
-                Row row = (Row) rowData;
-                row.getCell(4).setCellType(CellType.STRING);
-                row.getCell(5).setCellType(CellType.STRING);
-                address = row.getCell(4).getStringCellValue();
-                email = row.getCell(5).getStringCellValue();
-            }
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("address", address);
-            jsonObject.put("email", email);
-            reflectVo.setOtherInfo(jsonObject.toJSONString());
+    public void defineParse(ReflectVo t, Object rowData, ParseParam parseParam) {
+        String address = "";
+        String email = "";
+        if (rowData instanceof String[]) {
+            String[] rowArr = (String[]) rowData;
+            address = rowArr[4];
+            email = rowArr[5];
+        } else if (rowData instanceof Row) {
+            Row row = (Row) rowData;
+            address = ExcelUtil.getCellValue(row, 4);
+            email = ExcelUtil.getCellValue(row, 5);
         }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("address", address);
+        jsonObject.put("email", email);
+        t.setOtherInfo(jsonObject.toJSONString());
     }
 }
