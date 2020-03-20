@@ -3,7 +3,6 @@ package org.osource.scd.parse.event;
 
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.metadata.CellData;
-import com.alibaba.excel.read.listener.ModelBuildEventListener;
 import com.alibaba.excel.read.listener.ReadListener;
 import org.osource.scd.param.ParseParam;
 import org.slf4j.Logger;
@@ -17,7 +16,7 @@ import java.util.Map;
  *
  */
 public class ModelParserListener<T> implements ReadListener<Map<Integer, CellData>> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ModelBuildEventListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ModelParserListener.class);
 
     private ParseParam parseParam;
 
