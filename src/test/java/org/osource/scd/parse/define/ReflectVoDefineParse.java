@@ -1,7 +1,6 @@
 package org.osource.scd.parse.define;
 
 import com.alibaba.fastjson.JSONObject;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.osource.scd.param.ParseParam;
 import org.osource.scd.parse.model.ReflectVo;
