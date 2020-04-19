@@ -14,10 +14,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author James
  */
 public class AnnotationUtil {
-    private static final Map<Class<?>, Map<Integer, Map<String, Method>>> declaredClassSheetSetter = new ConcurrentHashMap<>(1024);
+    private static final Map<Class<?>, Map<Integer, Map<String, Method>>> DECLARED_CLASS_SHEET_SETTER = new ConcurrentHashMap<>(1024);
 
     public static Map<Integer, Map<String, Method>> findManySheetSetter(Class<?> clazz) {
-        Map<Integer, Map<String, Method>> manySheetMethodMap = declaredClassSheetSetter.get(clazz);
+        Map<Integer, Map<String, Method>> manySheetMethodMap = DECLARED_CLASS_SHEET_SETTER.get(clazz);
         if (manySheetMethodMap == null) {
             manySheetMethodMap = new HashMap<>(16);
             Map<String, Method> allBeanSetter = ReflectUtil.getBeanSetterMap(clazz);
@@ -50,7 +50,7 @@ public class AnnotationUtil {
                 }
             }
         }
-        declaredClassSheetSetter.put(clazz, manySheetMethodMap);
+        DECLARED_CLASS_SHEET_SETTER.put(clazz, manySheetMethodMap);
         return manySheetMethodMap;
     }
 

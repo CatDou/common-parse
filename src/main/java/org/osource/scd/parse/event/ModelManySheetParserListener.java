@@ -32,7 +32,7 @@ public class ModelManySheetParserListener<T> implements ReadListener<Map<Integer
     }
 
     @Override
-    public void onException(Exception e, AnalysisContext analysisContext) throws Exception {
+    public void onException(Exception e, AnalysisContext analysisContext) {
     }
 
     @Override

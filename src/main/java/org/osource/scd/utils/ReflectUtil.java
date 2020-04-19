@@ -15,15 +15,13 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ReflectUtil {
 
-    private static final Field[] EMPTY_FIELD = {};
+    private static final  Map<Class<?>, Field[]> DECLARED_FIELDS_CACHE = new ConcurrentHashMap<>(1024);
 
-    private static final  Map<Class<?>, Field[]> declaredFieldsCache = new ConcurrentHashMap<>(1024);
+    private static final  Map<Class<?>, Method[]> DECLARED_METHODS_CACHE = new ConcurrentHashMap<>(1024);
 
-    private static final  Map<Class<?>, Method[]> declaredMethodsCache = new ConcurrentHashMap<>(1024);
+    private static final  Map<Class<?>, List<Method>> BEAN_METHOD_CACHE = new ConcurrentHashMap<>(1024);
 
-    private static final  Map<Class<?>, List<Method>> beanMethodCache = new ConcurrentHashMap<>(1024);
-
-    private static final  Map<Class<?>, Map<String, Method>> beanFieldSetterCache = new ConcurrentHashMap<>(1024);
+    private static final  Map<Class<?>, Map<String, Method>> BEAN_FIELD_SETTER_CACHE = new ConcurrentHashMap<>(1024);
 
     private static final String SET_METHOD_PREFIX = "set";
 
@@ -31,10 +29,10 @@ public class ReflectUtil {
         if (clazz == null) {
             throw new IllegalArgumentException("input param is null");
         }
-        Field[] fields = declaredFieldsCache.get(clazz);
+        Field[] fields = DECLARED_FIELDS_CACHE.get(clazz);
         if (fields == null) {
             fields = clazz.getDeclaredFields();
-            declaredFieldsCache.put(clazz, fields);
+            DECLARED_FIELDS_CACHE.put(clazz, fields);
         }
         return fields;
     }
@@ -88,10 +86,10 @@ public class ReflectUtil {
         if (clazz == null) {
             throw new IllegalArgumentException("input param class is null");
         }
-        Method[] declareMethods = declaredMethodsCache.get(clazz);
+        Method[] declareMethods = DECLARED_METHODS_CACHE.get(clazz);
         if (declareMethods == null) {
             declareMethods = clazz.getDeclaredMethods();
-            declaredMethodsCache.put(clazz, declareMethods);
+            DECLARED_METHODS_CACHE.put(clazz, declareMethods);
         }
         return declareMethods;
     }
@@ -159,7 +157,7 @@ public class ReflectUtil {
         if (clazz == null) {
             throw new IllegalArgumentException("input param class is null");
         }
-        List<Method> allBeanMethods = beanMethodCache.get(clazz);
+        List<Method> allBeanMethods = BEAN_METHOD_CACHE.get(clazz);
         if (allBeanMethods == null) {
             allBeanMethods = new ArrayList<>();
             Class<?> tempClazz = clazz;
@@ -171,7 +169,7 @@ public class ReflectUtil {
                 }
                 tempClazz = tempClazz.getSuperclass();
             }
-            beanMethodCache.put(clazz, allBeanMethods);
+            BEAN_METHOD_CACHE.put(clazz, allBeanMethods);
         }
         return allBeanMethods;
     }
@@ -202,7 +200,7 @@ public class ReflectUtil {
         if (clazz == null) {
             throw new IllegalArgumentException("input param class is null");
         }
-        Map<String, Method> beanSetterMap = beanFieldSetterCache.get(clazz);
+        Map<String, Method> beanSetterMap = BEAN_FIELD_SETTER_CACHE.get(clazz);
         if (beanSetterMap == null) {
             beanSetterMap = new HashMap<>(16);
             Class<?> tempClazz = clazz;
@@ -213,7 +211,7 @@ public class ReflectUtil {
                 }
                 tempClazz = tempClazz.getSuperclass();
             }
-            beanFieldSetterCache.put(clazz, beanSetterMap);
+            BEAN_FIELD_SETTER_CACHE.put(clazz, beanSetterMap);
         }
         return beanSetterMap;
     }

@@ -32,7 +32,7 @@ public class ModelParserListener<T> implements ReadListener<Map<Integer, CellDat
 
 
     @Override
-    public void onException(Exception e, AnalysisContext analysisContext) throws Exception {
+    public void onException(Exception e, AnalysisContext analysisContext)  {
     }
 
     @Override

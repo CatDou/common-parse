@@ -1,6 +1,5 @@
 package org.osource.scd.param;
 
-import lombok.Data;
 import org.osource.scd.constant.ParseType;
 import org.osource.scd.parse.define.RowDefineParse;
 import org.osource.scd.parse.consumer.DataConsumer;
@@ -15,7 +14,6 @@ import java.util.Map;
  * @author chengdu
  *
  */
-@Data
 public class ParseParam {
     private int startLine;
 
@@ -38,7 +36,7 @@ public class ParseParam {
     private int batchNum = 1000;
 
     public ParseParam() {
-        errorRecord = new DefaultErrorRecord(new StringBuilder(""));
+        errorRecord = new DefaultErrorRecord(new StringBuilder());
     }
 
     public ParseParam setStartLine(int startLine) {
@@ -89,5 +87,45 @@ public class ParseParam {
     public ParseParam setDataConsumer(DataConsumer dataConsumer) {
         this.dataConsumer = dataConsumer;
         return this;
+    }
+
+    public int getStartLine() {
+        return startLine;
+    }
+
+    public int getSheetNum() {
+        return sheetNum;
+    }
+
+    public Map<String, Method> getFieldSetterMap() {
+        return fieldSetterMap;
+    }
+
+    public RowDefineParse getBusinessDefineParse() {
+        return businessDefineParse;
+    }
+
+    public String getEncode() {
+        return encode;
+    }
+
+    public ErrorRecord getErrorRecord() {
+        return errorRecord;
+    }
+
+    public CellFormat getCellFormat() {
+        return cellFormat;
+    }
+
+    public ParseType getParseType() {
+        return parseType;
+    }
+
+    public DataConsumer getDataConsumer() {
+        return dataConsumer;
+    }
+
+    public int getBatchNum() {
+        return batchNum;
     }
 }

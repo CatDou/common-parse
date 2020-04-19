@@ -24,7 +24,7 @@ import java.util.Map;
 public class CsvFileParse implements FileParse {
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvFileParse.class);
 
-    private static final String split_regex = "[,\t]";
+    private static final String SPLIT_REGEX = "[,\t]";
 
     @Override
     public <T> List<T> parseFile(String filePath, Class<T> clazz, ParseParam parseParam) {
@@ -106,7 +106,7 @@ public class CsvFileParse implements FileParse {
         if (!inputLine.contains(",") && !inputLine.contains("\t")) {
             throw new IllegalArgumentException("input csv line unknown delimiter");
         }
-        String[] inputArr = inputLine.split(split_regex);
+        String[] inputArr = inputLine.split(SPLIT_REGEX);
         List<String> resultList = new ArrayList<>(inputArr.length);
         for (int i = 0; i < inputArr.length; i++) {
             String istr = inputArr[i];

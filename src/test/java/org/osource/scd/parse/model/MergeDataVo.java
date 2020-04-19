@@ -1,6 +1,5 @@
 package org.osource.scd.parse.model;
 
-import lombok.Data;
 import org.osource.scd.anno.Location;
 
 import java.util.Date;
@@ -8,7 +7,6 @@ import java.util.Date;
 /**
  * @author chengdu
  */
-@Data
 public class MergeDataVo {
     @Location(column = "A")
     private String string;
@@ -26,4 +24,68 @@ public class MergeDataVo {
     private Double score;
     @Location(sheet = 1, column = "D")
     private Date rdate;
+
+    public String getString() {
+        return string;
+    }
+
+    public void setString(String string) {
+        this.string = string;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Double getDoubleData() {
+        return doubleData;
+    }
+
+    public void setDoubleData(Double doubleData) {
+        this.doubleData = doubleData;
+    }
+
+    public Date getUtDate() {
+        return utDate;
+    }
+
+    public void setUtDate(Date utDate) {
+        this.utDate = utDate;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Double getScore() {
+        return score;
+    }
+
+    public void setScore(Double score) {
+        this.score = score;
+    }
+
+    public Date getRdate() {
+        return rdate;
+    }
+
+    public void setRdate(Date rdate) {
+        this.rdate = rdate;
+    }
 }
