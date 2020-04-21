@@ -1,6 +1,7 @@
 package org.osource.scd.parse.event;
 
 import com.alibaba.excel.context.AnalysisContext;
+import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.CellData;
 import com.alibaba.excel.read.metadata.holder.ReadHolder;
 import com.alibaba.excel.util.ConverterUtils;
@@ -39,7 +40,12 @@ public class ModelParserCommon {
                 }
                 String cellValue;
                 if (cellData instanceof CellData) {
-                    cellValue = (String) ConverterUtils.convertToJavaObject((CellData) cellData, null, null,
+                    CellData conertCellData = (CellData) cellData;
+                    // Converter not found, convert EMPTY to java.lang.String
+                    if (CellDataTypeEnum.EMPTY == conertCellData.getType()) {
+                        continue;
+                    }
+                    cellValue = (String) ConverterUtils.convertToJavaObject(conertCellData, null, null,
                             currentReadHolder.converterMap(),
                             currentReadHolder.globalConfiguration(), analysisContext.readRowHolder().getRowIndex(), column);
                 } else if (cellData instanceof String) {
@@ -59,6 +65,8 @@ public class ModelParserCommon {
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return t;
