@@ -1,5 +1,6 @@
 package org.osource.scd.parse;
 
+import org.junit.Assert;
 import org.osource.scd.constant.ParseType;
 import org.osource.scd.param.ParseParam;
 import org.osource.scd.parse.model.Label;
@@ -22,6 +23,6 @@ public class EmptyTest {
         FileParse fileParse = FileParseCreateor.createFileParse(
                 FileParseCommonUtil.findParserType(excelPath, parseParam));
         List<Label> labelList = fileParse.parseFile(excelPath, Label.class, parseParam);
-        System.out.println(labelList);
+        Assert.assertTrue(labelList.size() > 0);
     }
 }
