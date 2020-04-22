@@ -40,12 +40,12 @@ public class ModelParserCommon {
                 }
                 String cellValue;
                 if (cellData instanceof CellData) {
-                    CellData conertCellData = (CellData) cellData;
+                    CellData convertCellData = (CellData) cellData;
                     // Converter not found, convert EMPTY to java.lang.String
-                    if (CellDataTypeEnum.EMPTY == conertCellData.getType()) {
+                    if (CellDataTypeEnum.EMPTY == convertCellData.getType()) {
                         continue;
                     }
-                    cellValue = (String) ConverterUtils.convertToJavaObject(conertCellData, null, null,
+                    cellValue = (String) ConverterUtils.convertToJavaObject(convertCellData, null, null,
                             currentReadHolder.converterMap(),
                             currentReadHolder.globalConfiguration(), analysisContext.readRowHolder().getRowIndex(), column);
                 } else if (cellData instanceof String) {

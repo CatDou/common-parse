@@ -1,6 +1,7 @@
 package org.osource.scd.parse;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.osource.scd.constant.ParseType;
 import org.osource.scd.param.ParseParam;
 import org.osource.scd.parse.model.Label;
@@ -14,7 +15,8 @@ import java.util.List;
  */
 public class EmptyTest {
 
-    public static void main(String[] args) {
+    @Test
+    public void testCellEmpty() {
         String excelPath = "file/test-empty.xlsx";
         ParseParam parseParam = new ParseParam()
                 .setStartLine(1)
