@@ -21,7 +21,7 @@ public class EasyExcelParse implements FileParse {
 
     @Override
     public <T> List<T> parseFile(String filePath, Class<T> clazz, ParseParam parseParam) {
-        List<T> resultList = new LinkedList<>();
+        List<T> resultList = new ArrayList<>();
         ModelParserListener modelParserListener = new ModelParserListener(parseParam, resultList, clazz);
         EasyExcel.read(filePath, modelParserListener).useDefaultListener(false)
                 .sheet(parseParam.getSheetNum()).headRowNumber(parseParam.getStartLine()).doRead();

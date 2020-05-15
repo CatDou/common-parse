@@ -22,7 +22,7 @@ public class ExcelFileParse implements FileParse {
     @Override
     public <T> List<T> parseFile(String filePath, Class<T> clazz, ParseParam parseParam) {
         Workbook workbook = null;
-        List<T> resultList = new LinkedList<>();
+        List<T> resultList = new ArrayList<>();
         try {
             workbook = ExcelUtil.getWorkBook(filePath);
             Sheet sheet = workbook.getSheetAt(parseParam.getSheetNum());
@@ -68,7 +68,7 @@ public class ExcelFileParse implements FileParse {
             for (Map.Entry<Integer, ParseParam> entry : entrySet) {
                 Integer sheetNum = entry.getKey();
                 ParseParam parseParam = entry.getValue();
-                List<T> sheetResultList = new LinkedList<>();
+                List<T> sheetResultList = new ArrayList<>();
                 Sheet sheet = workbook.getSheetAt(sheetNum);
                 addSheetResultList(sheet, clazz, parseParam, sheetResultList);
                 resultMap.put(sheetNum, sheetResultList);
