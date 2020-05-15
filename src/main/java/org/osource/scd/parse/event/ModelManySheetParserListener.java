@@ -7,7 +7,7 @@ import org.osource.scd.param.ParseParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +48,7 @@ public class ModelManySheetParserListener<T> implements ReadListener<Map<Integer
         if (parseParam != null) {
             List<T> resultList = resultMap.get(sheetNo);
             if (resultList == null) {
-                resultList = new LinkedList<>();
+                resultList = new ArrayList<>();
                 resultMap.put(sheetNo, resultList);
             }
             if (rowIndex >= parseParam.getStartLine()) {

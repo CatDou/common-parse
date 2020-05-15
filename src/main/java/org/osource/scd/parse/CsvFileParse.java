@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public class CsvFileParse implements FileParse {
         // 校验入参
         checkParam(parseParam);
         BufferedReader reader = null;
-        List<T> resultList = new LinkedList<>();
+        List<T> resultList = new ArrayList<>();
         try {
             String charsetName = parseParam.getEncode() != null ?
                     parseParam.getEncode() : CommonConstant.GBK;
