@@ -24,7 +24,7 @@ public class EasyExcelParse implements FileParse {
         List<T> resultList = new ArrayList<>();
         ModelParserListener modelParserListener = new ModelParserListener(parseParam, resultList, clazz);
         EasyExcel.read(filePath, modelParserListener).useDefaultListener(false)
-                .sheet(parseParam.getSheetNum()).headRowNumber(parseParam.getStartLine()).doRead();
+                .sheet(parseParam.getSheetNum()).headRowNumber(0).doRead();
         return resultList;
     }
 
@@ -38,7 +38,7 @@ public class EasyExcelParse implements FileParse {
             Set<Integer> sheetSet = parseParamMap.keySet();
             ReadSheet[] readSheetArrays = new ReadSheet[sheetSet.size()];
             for (Integer sheet : sheetSet) {
-                ReadSheet readSheet = EasyExcel.readSheet(sheet).registerReadListener(modelParserListener).build();
+                ReadSheet readSheet = EasyExcel.readSheet(sheet).headRowNumber(0).registerReadListener(modelParserListener).build();
                 readSheetArrays[sheet] = readSheet;
             }
             excelReader.read(readSheetArrays);

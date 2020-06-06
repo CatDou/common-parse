@@ -43,14 +43,16 @@ public class ModelParserListener<T> implements ReadListener<Map<Integer, CellDat
     @Override
     public void invoke(Map<Integer, CellData> cellDataMap, AnalysisContext analysisContext) {
         // convert cell data to model
-        T t = ModelParserCommon.convertCellDataMapToVo(cellDataMap, analysisContext, clazz, parseParam);
-        if (t != null) {
-            resultList.add(t);
-        } else {
-                int rowIndex = analysisContext.readRowHolder().getRowIndex();
+        int rowIndex = analysisContext.readRowHolder().getRowIndex();
+        if ( rowIndex >= parseParam.getStartLine()) {
+            T t = ModelParserCommon.convertCellDataMapToVo(cellDataMap, analysisContext, clazz, parseParam);
+            if (t != null) {
+                resultList.add(t);
+            } else {
                 parseParam.getErrorRecord()
                         .writeErrorMsg("line " + rowIndex + ":" + cellDataMap +
                                 "covert to null");
+            }
         }
         if (parseParam.getDataConsumer() != null) {
             if (resultList.size() >= parseParam.getBatchNum()) {
